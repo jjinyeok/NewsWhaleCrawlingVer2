@@ -1,0 +1,60 @@
+# 0. 준비
+# install scrapy
+# install konlpy
+# install pymysql
+pip install scrapy
+pip install konlpy
+pip install pymysql
+
+# 1. 스크래파이 프로젝트 생성
+scrapy startproject news_crawling
+
+# 2. 스크래파이 프로젝트
+tree news_crawling
+# news_crawling
+# ├── news_crawling
+# │   ├── __init__.py
+# │   ├── items.py : 데이터의 모양 정의
+# │   ├── middlewares.py : 수집할 때 header 정보와 같은 내용을 설정
+# │   ├── pipelines.py : 데이터를 수집한 후에 코드를 실행
+# │   ├── settings.py
+# │   └── spiders : 크롤링 절차를 정의
+# │       └── __init__.py
+# └── scrapy.cfg
+#
+# 2 directories, 7 files
+
+# 3. xpath 찾기
+python naver.py
+python daum.py
+python zum.py
+
+# 4. items.py : 모델 정리
+# news_crawling/news_crawling/items.py
+# class NewsCrawlingItem(scrapy.Item):
+#     # define the fields for your item here like:
+#     # name = scrapy.Field()
+#     article_title = scrapy.Field()
+#     article_reporter = scrapy.Field()
+#     article_url = scrapy.Field()
+#     article_media_name = scrapy.Field()
+#     article_media_url = scrapy.Field()
+#     article_media_image_src = scrapy.Field()
+#     article_last_modified_date = scrapy.Field()
+
+# 5. spider.py : 크롤링 절차 정의
+# Item을 채우는 과정
+
+# 6. 크롤링 확인하기
+scrapy crawl Naver -o naver.csv # 네이버 랭킹 뉴스 크롤링
+scrapy crawl Daum -o daum.csv # 다음 메인 뉴스 크롤링
+scrapy crawl Zum -o zum.csv # 줌 메인 뉴스 크롤링
+
+# 7. 파이프라인 만들기
+# 7-1. 각각의 크롤링 이후: pymysql에 INSERT하기 좋은 형식으로 데이터 만들기
+# 7-2. 스파이더 종료: pymysql을 통해 db에 전송
+
+# 8. 실행하기
+scrapy crawl Naver
+scrapy crawl Daum
+scrapy crawl Zum
